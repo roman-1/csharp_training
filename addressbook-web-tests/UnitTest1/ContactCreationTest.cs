@@ -9,15 +9,16 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 
 namespace WebAddressbookTests
+
 {
     [TestFixture]
-    public class GroupCreationTests
+    public class ContactCreationTests
     {
         private IWebDriver driver;
         private StringBuilder verificationErrors;
         private string baseURL;
         private bool acceptNextAlert = true;
-
+        
         [SetUp]
         public void SetupTest()
         {
@@ -25,7 +26,7 @@ namespace WebAddressbookTests
             baseURL = "http://localhost/addressbook/";
             verificationErrors = new StringBuilder();
         }
-
+        
         [TearDown]
         public void TeardownTest()
         {
@@ -39,77 +40,42 @@ namespace WebAddressbookTests
             }
             Assert.AreEqual("", verificationErrors.ToString());
         }
-
+        
         [Test]
-        public void GroupCreationTest()
+        public void ContactCreationTest()
         {
-            OpenHomePage();
+            AddressBooklink();
             Login(new AccountData("admin", "secret"));
-            GoToGroupspage();
-            NewGroupCreation();
-            GroupData group = new GroupData("aaa");
-            group.Footer = "fff";
-            group.Header = "ddd";
-            FillGroupForm(group);
-            SubmitForm();
-            ReturnToGroupsPage();
-            Logout();
+            NewContact();
+            FillContactData(new ContactData("Иван", "Иванов"));
+            EnterKey();
+        }
+
+        private void EnterKey()
+        {
+            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Notes:'])[1]/following::input[1]")).Click();
+        }
+
+        private void FillContactData(ContactData contact)
+        {
+            driver.FindElement(By.Name("firstname")).SendKeys(contact.Name);
+            driver.FindElement(By.Name("lastname")).SendKeys(contact.Surename);
 
         }
 
-        private void Logout()
+        private void NewContact()
         {
-            driver.FindElement(By.LinkText("Logout")).Click();
-            Thread.Sleep(700);   //пауза в мсек
-        }
-
-        private void ReturnToGroupsPage()
-        {
-            driver.FindElement(By.LinkText("groups")).Click();
-        }
-
-        private void SubmitForm()
-        {
-            driver.FindElement(By.Name("submit")).Click();
-        }
-
-        private void FillGroupForm(GroupData group) // Переменные string name, string header, string footer)
-        {
-            driver.FindElement(By.Name("group_name")).Clear();
-            driver.FindElement(By.Name("group_name")).SendKeys(group.Name);
-            driver.FindElement(By.Name("group_header")).Click();
-            driver.FindElement(By.Name("group_header")).Clear();
-            driver.FindElement(By.Name("group_header")).SendKeys(group.Header);
-            driver.FindElement(By.Name("group_footer")).Clear();
-            driver.FindElement(By.Name("group_footer")).SendKeys(group.Footer);
-        }
-
-        private void NewGroupCreation()
-        {
-            driver.FindElement(By.Name("new")).Click();
-            driver.FindElement(By.Name("group_name")).Click();
-            driver.FindElement(By.Name("group_name")).Clear();
-        }
-
-        private void GoToGroupspage()
-        {
-            driver.FindElement(By.LinkText("groups")).Click();
+            driver.FindElement(By.LinkText("add new")).Click();
         }
 
         private void Login(AccountData account)
         {
-            driver.FindElement(By.Name("user")).Click();
-            driver.FindElement(By.Name("user")).Clear();
             driver.FindElement(By.Name("user")).SendKeys(account.Username);
-            driver.FindElement(By.Name("pass")).Clear();
             driver.FindElement(By.Name("pass")).SendKeys(account.Password);
             driver.FindElement(By.XPath("//input[@value='Login']")).Click();
         }
 
-
-
-
-        private void OpenHomePage()
+        private void AddressBooklink()
         {
             driver.Navigate().GoToUrl(baseURL);
         }
@@ -126,7 +92,7 @@ namespace WebAddressbookTests
                 return false;
             }
         }
-
+        
         private bool IsAlertPresent()
         {
             try
@@ -139,25 +105,18 @@ namespace WebAddressbookTests
                 return false;
             }
         }
-
-        private string CloseAlertAndGetItsText()
-        {
-            try
-            {
+        
+        private string CloseAlertAndGetItsText() {
+            try {
                 IAlert alert = driver.SwitchTo().Alert();
                 string alertText = alert.Text;
-                if (acceptNextAlert)
-                {
+                if (acceptNextAlert) {
                     alert.Accept();
-                }
-                else
-                {
+                } else {
                     alert.Dismiss();
                 }
                 return alertText;
-            }
-            finally
-            {
+            } finally {
                 acceptNextAlert = true;
             }
         }
