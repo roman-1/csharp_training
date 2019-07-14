@@ -22,7 +22,7 @@ namespace WebAddressbookTests
         [SetUp]
         public void SetupTest()
         {
-            driver = new ChromeDriver(@"D:\WebDrivers\Chromedriver\");
+            driver = new ChromeDriver(@"C:\Drivers\chromedriver_win32-75\");
             baseURL = "http://localhost/addressbook/";
             verificationErrors = new StringBuilder();
         }
@@ -53,7 +53,7 @@ namespace WebAddressbookTests
 
         private void EnterKey()
         {
-            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Notes:'])[1]/following::input[1]")).Click();
+            driver.FindElement(By.XPath("//input[@value='Enter']")).Click();
         }
 
         private void FillContactData(ContactData contact)
