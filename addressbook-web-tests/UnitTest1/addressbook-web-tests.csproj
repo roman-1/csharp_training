@@ -69,6 +69,7 @@
     <Compile Include="GroupRemovalTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ContactCreationTest.cs" />
+    <Compile Include="TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

@@ -4,116 +4,30 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
+
 
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupCreationTests
+    public class GroupCreationTests : TestBase
     {
-        private IWebDriver driver;
-        private StringBuilder verificationErrors;
-        private string baseURL;
-
-        [SetUp]
-        public void SetupTest()
-        {
-            driver = new ChromeDriver(@"c:\Drivers\chromedriver_win32-75\");
-            baseURL = "http://localhost/addressbook/";
-            verificationErrors = new StringBuilder();
-        }
-
-        [TearDown]
-        public void TeardownTest()
-        {
-            try
-            {
-                driver.Quit();
-            }
-            catch (Exception)
-            {
-                // Ignore errors if unable to close the browser
-            }
-            Assert.AreEqual("", verificationErrors.ToString());
-        }
-
+        
         [Test]
         public void GroupCreationTest()
         {
-            OpenHomePage();
+            GoToHomePage();
             Login(new AccountData("admin", "secret"));
-            GoToGroupspage();
+            GotoGroupsPage();
             NewGroupCreation();
             GroupData group = new GroupData("aaa");
             group.Footer = "fff";
             group.Header = "ddd";
             FillGroupForm(group);
-            SubmitForm();
-            ReturnToGroupsPage();
+            SubmitContactCreation();
+            GotoGroupsPage();
             Logout();
 
         }
-
-        private void Logout()
-        {
-            driver.FindElement(By.LinkText("Logout")).Click();
-            Thread.Sleep(700);   //пауза в мсек
-        }
-
-        private void ReturnToGroupsPage()
-        {
-            driver.FindElement(By.LinkText("groups")).Click();
-        }
-
-        private void SubmitForm()
-        {
-            driver.FindElement(By.Name("submit")).Click();
-        }
-
-        private void FillGroupForm(GroupData group) // Переменные string name, string header, string footer)
-        {
-            driver.FindElement(By.Name("group_name")).Clear();
-            driver.FindElement(By.Name("group_name")).SendKeys(group.Name);
-            driver.FindElement(By.Name("group_header")).Click();
-            driver.FindElement(By.Name("group_header")).Clear();
-            driver.FindElement(By.Name("group_header")).SendKeys(group.Header);
-            driver.FindElement(By.Name("group_footer")).Clear();
-            driver.FindElement(By.Name("group_footer")).SendKeys(group.Footer);
-        }
-
-        private void NewGroupCreation()
-        {
-            driver.FindElement(By.Name("new")).Click();
-            driver.FindElement(By.Name("group_name")).Click();
-            driver.FindElement(By.Name("group_name")).Clear();
-        }
-
-        private void GoToGroupspage()
-        {
-            driver.FindElement(By.LinkText("groups")).Click();
-        }
-
-        private void Login(AccountData account)
-        {
-            driver.FindElement(By.Name("user")).Click();
-            driver.FindElement(By.Name("user")).Clear();
-            driver.FindElement(By.Name("user")).SendKeys(account.Username);
-            driver.FindElement(By.Name("pass")).Clear();
-            driver.FindElement(By.Name("pass")).SendKeys(account.Password);
-            driver.FindElement(By.XPath("//input[@value='Login']")).Click();
-        }
-
-
-
-
-        private void OpenHomePage()
-        {
-            driver.Navigate().GoToUrl(baseURL);
-        }
-
-
 
     }
 }
