@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -8,23 +7,22 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 
-
 namespace WebAddressbookTests
-
 {
     [TestFixture]
-    public class ContactCreationTests
+    public class GroupRemovalTests
     {
         private IWebDriver driver;
         private string baseURL;
-        
+
+
         [SetUp]
         public void SetupTest()
         {
             driver = new ChromeDriver(@"C:\Drivers\chromedriver_win32-75\");
             baseURL = "http://localhost/addressbook/";
         }
-        
+
         [TearDown]
         public void TeardownTest()
         {
@@ -36,40 +34,47 @@ namespace WebAddressbookTests
             {
                 // Ignore errors if unable to close the browser
             }
-           // Assert.AreEqual("", verificationErrors.ToString());
+            //Assert.AreEqual("", verificationErrors.ToString());
         }
-        
+
         [Test]
-        public void ContactCreationTest()
+        public void GroupRemovalTest()
         {
             GoToHomePage();
-            Login(new AccountData("admin", "secret"));
-            NewContact();
-            FillContactData(new ContactData("Иван", "Иванов"));
-            SubmitContactCreation();
+            Login();
+            GotoGroupsPage();
+            SelectGroup();
+            DeleteGroup();
+            GotoGroupsPage();
+            Logout();
         }
 
-        private void SubmitContactCreation()
+        private void Logout()
         {
-            driver.FindElement(By.XPath("//input[@value='Enter']")).Click();
+            driver.FindElement(By.LinkText("Logout")).Click();
         }
 
-        private void FillContactData(ContactData contact)
+        private void DeleteGroup()
         {
-            driver.FindElement(By.Name("firstname")).SendKeys(contact.Name);
-            driver.FindElement(By.Name("lastname")).SendKeys(contact.Surename);
-
+            driver.FindElement(By.Name("delete")).Click();
         }
 
-        private void NewContact()
+        private void SelectGroup()
         {
-            driver.FindElement(By.LinkText("add new")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[1]")).Click();
         }
 
-        private void Login(AccountData account)
+        private void GotoGroupsPage()
         {
-            driver.FindElement(By.Name("user")).SendKeys(account.Username);
-            driver.FindElement(By.Name("pass")).SendKeys(account.Password);
+            driver.FindElement(By.LinkText("groups")).Click();
+        }
+
+        private void Login()
+        {
+            driver.FindElement(By.Name("user")).Click();
+            driver.FindElement(By.Name("user")).SendKeys("admin");
+            driver.FindElement(By.Name("pass")).Click();
+            driver.FindElement(By.Name("pass")).SendKeys("secret");
             driver.FindElement(By.XPath("//input[@value='Login']")).Click();
         }
 
