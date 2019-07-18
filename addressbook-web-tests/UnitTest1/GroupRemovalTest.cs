@@ -41,9 +41,9 @@ namespace WebAddressbookTests
         public void GroupRemovalTest()
         {
             GoToHomePage();
-            Login();
+            Login(new AccountData ("admin","secret"));
             GotoGroupsPage();
-            SelectGroup();
+            SelectGroup(1);
             DeleteGroup();
             GotoGroupsPage();
             Logout();
@@ -59,9 +59,9 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("delete")).Click();
         }
 
-        private void SelectGroup()
+        private void SelectGroup(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[1]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
         }
 
         private void GotoGroupsPage()
@@ -69,12 +69,12 @@ namespace WebAddressbookTests
             driver.FindElement(By.LinkText("groups")).Click();
         }
 
-        private void Login()
+        private void Login(AccountData account)
         {
             driver.FindElement(By.Name("user")).Click();
-            driver.FindElement(By.Name("user")).SendKeys("admin");
+            driver.FindElement(By.Name("user")).SendKeys(account.Username);
             driver.FindElement(By.Name("pass")).Click();
-            driver.FindElement(By.Name("pass")).SendKeys("secret");
+            driver.FindElement(By.Name("pass")).SendKeys(account.Password);
             driver.FindElement(By.XPath("//input[@value='Login']")).Click();
         }
 

@@ -64,7 +64,6 @@
   <ItemGroup>
     <Compile Include="AccountDate.cs" />
     <Compile Include="ContactData.cs" />
-    <Compile Include="Figure.cs" />
     <Compile Include="GroupData.cs" />
     <Compile Include="GroupCreationTests.cs" />
     <Compile Include="GroupRemovalTest.cs" />
