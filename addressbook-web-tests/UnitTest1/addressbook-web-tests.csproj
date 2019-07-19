@@ -64,9 +64,14 @@
   <ItemGroup>
     <Compile Include="AccountDate.cs" />
     <Compile Include="ContactData.cs" />
+    <Compile Include="ContactHelper.cs" />
     <Compile Include="GroupData.cs" />
     <Compile Include="GroupCreationTests.cs" />
+    <Compile Include="GroupHelper.cs" />
     <Compile Include="GroupRemovalTest.cs" />
+    <Compile Include="HelperBase.cs" />
+    <Compile Include="LoginHelper.cs" />
+    <Compile Include="NavigationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ContactCreationTest.cs" />
     <Compile Include="TestBase.cs" />
