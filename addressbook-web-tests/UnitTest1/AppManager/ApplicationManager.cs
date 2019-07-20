@@ -23,16 +23,27 @@ namespace WebAddressbookTests
 
         [SetUp]
         public void SetupTest()
-        {   driver = new ChromeDriver(@"C:\Drivers\chromedriver_win32-75\");
-            baseURL = "http://localhost/addressbook/";
-       }
+        {    }
 
         public ApplicationManager() 
-        {   loginHelper = new LoginHelper(driver);     // инициализация помощников
-            navigator = new NavigationHelper(driver, baseURL);
-            groupHelper = new GroupHelper(driver);
-            contactHelper = new ContactHelper(driver);
+        {
+            driver = new ChromeDriver(@"C:\Drivers\chromedriver_win32-75\");
+            baseURL = "http://localhost/addressbook";
+            loginHelper = new LoginHelper(this);     // инициализация помощников
+            navigator = new NavigationHelper(this, baseURL);
+            groupHelper = new GroupHelper(this);
+            contactHelper = new ContactHelper(this);
+
         }
+
+        public IWebDriver Driver
+        {
+            get
+            {
+                return driver;
+            }
+        }
+
 
         public void Stop()
         {
@@ -65,7 +76,7 @@ namespace WebAddressbookTests
             }
         }
 
-        public GroupHelper Group
+        public GroupHelper Groups
         {
             get
             {
