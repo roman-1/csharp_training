@@ -15,17 +15,17 @@ namespace WebAddressbookTests
         [Test]
         public void GroupCreationTest()
         {
-            navigator.GoToHomePage();
-            loginHelper.Login(new AccountData("admin", "secret"));
-            navigator.GotoGroupsPage();
-            groupHelper.NewGroupCreation();
+            app.Navigator.GoToHomePage();
+            app.Auth.Login(new AccountData("admin", "secret"));
+            app.Navigator.GotoGroupsPage();
+            app.Group.NewGroupCreation();
             GroupData group = new GroupData("aaa");
             group.Footer = "fff";
             group.Header = "ddd";
-            groupHelper.FillGroupForm(group);
-            groupHelper.Submit();
-            navigator.GotoGroupsPage();
-            loginHelper.Logout();
+            app.Group.FillGroupForm(group);
+            app.Group.Submit();
+            app.Navigator.GotoGroupsPage();
+            app.Auth.Logout();
 
         }
 
