@@ -9,7 +9,7 @@ namespace WebAddressbookTests
     public class AccountData
     {
         private string username;
-        private string password;
+        private string password; 
 
 
         public AccountData(string username, string password)
