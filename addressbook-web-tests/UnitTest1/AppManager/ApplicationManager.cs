@@ -9,7 +9,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 
-namespace WebAddressbookTests
+namespace WebAddressbookTests 
 {
     public class ApplicationManager
     {

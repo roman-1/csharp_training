@@ -19,7 +19,7 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("user")).SendKeys(account.Username);
             driver.FindElement(By.Name("pass")).Click();
             driver.FindElement(By.Name("pass")).SendKeys(account.Password);
-            driver.FindElement(By.XPath("//input[@value='Login']")).Click();
+            driver.FindElement(By.XPath("//input[@value='Login']")).Click(); 
         }
 
       

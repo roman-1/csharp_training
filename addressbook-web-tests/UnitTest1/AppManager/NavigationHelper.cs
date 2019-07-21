@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Support.UI; 
 
 namespace WebAddressbookTests
 {
@@ -34,6 +34,14 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.LinkText("add new")).Click();
         }
+
+        public void GotoContacts()
+        {
+            driver.FindElement(By.LinkText("home")).Click();
+        }
+
+
+
 
 
     }

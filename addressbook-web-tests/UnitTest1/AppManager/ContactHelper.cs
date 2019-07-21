@@ -8,6 +8,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 
+
 namespace WebAddressbookTests
 {
     public class ContactHelper : HelperBase
@@ -25,7 +26,6 @@ namespace WebAddressbookTests
         }
 
 
-
         public ContactHelper FillContactData(ContactData contact)
         {
             driver.FindElement(By.Name("firstname")).SendKeys(contact.Name);
@@ -34,7 +34,35 @@ namespace WebAddressbookTests
         }
 
 
+        public void SelectContact()
+        {
+            driver.FindElement(By.Name("selected[]")).Click();
+        }
 
+
+        public ContactHelper EditContact()
+        {
+            driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
+            driver.FindElement(By.Name("middlename")).Clear();
+            driver.FindElement(By.Name("middlename")).SendKeys("Владимирович");
+            driver.FindElement(By.XPath("//form[@action='edit.php']")).Click();
+            driver.FindElement(By.Name("firstname")).Clear();
+            driver.FindElement(By.Name("firstname")).SendKeys("Владимир");
+            driver.FindElement(By.Name("address")).Clear();
+            driver.FindElement(By.Name("address")).SendKeys("Москва, д.1");
+            driver.FindElement(By.XPath("(//input[@name='update'])[2]")).Click(); 
+
+            return this;
+        }
+
+        public ContactHelper DeleteContact()
+        {
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            driver.SwitchTo().Alert().Accept();
+
+
+            return this;
+        }
 
     }
 }

@@ -18,6 +18,22 @@ namespace WebAddressbookTests
         {
         }
 
+        public GroupHelper GroupModification() 
+        {
+            manager.Navigator.GotoGroupsPage();
+            SelectGroup(1);
+            driver.FindElement(By.Name("edit")).Click();
+            driver.FindElement(By.Name("group_name")).SendKeys("123");
+            driver.FindElement(By.Name("group_header")).SendKeys("123");
+            driver.FindElement(By.Name("group_footer")).SendKeys("123");
+            driver.FindElement(By.Name("update")).Click();
+            manager.Navigator.GotoGroupsPage();
+            return this;
+
+        }
+
+
+
         public GroupHelper Remove(int p)
         {
             manager.Navigator.GotoGroupsPage();
