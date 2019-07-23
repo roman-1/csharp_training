@@ -22,7 +22,7 @@ namespace WebAddressbookTests
 
         public void TearDownTest()
         {
-           app.Stop();
+            app.Stop();
         }
 
 
