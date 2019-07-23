@@ -20,7 +20,7 @@ namespace WebAddressbookTests
             group.Header = "ddd";
 
             app.Groups.CreateGroup(group);
-             
+              
         }
 
         [Test]

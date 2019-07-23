@@ -11,7 +11,7 @@ namespace WebAddressbookTests
         private string name;
         private string surename;
 
-        public ContactData(string name, string surename) 
+        public ContactData(string name, string surename)  
         {
             this.name = name;
             this.surename = surename;

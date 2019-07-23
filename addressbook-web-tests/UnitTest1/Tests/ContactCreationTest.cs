@@ -10,10 +10,10 @@ namespace WebAddressbookTests
 
 {
     [TestFixture]
-    public class ContactsTests : TestBase
+    public class ContactCreationTests : TestBase
     {
         [Test]
-        public void ContactCreationTest()
+        public void ContactCreationTest() 
         {
             app.Navigator.NewContact();
             app.Contact.FillContactData(new ContactData("Иван", "Иванов"))
@@ -26,23 +26,6 @@ namespace WebAddressbookTests
             app.Navigator.NewContact();
             app.Contact.FillContactData(new ContactData("", ""))
                 .Submit();
-        }
-
-        [Test]
-        public void ContactModificationTest()
-        {
-            app.Navigator.GotoContacts();
-            app.Contact.EditContact();
-
-        }
-
-        [Test]
-        public void ContactRemovalTest()
-        {
-            app.Navigator.GotoContacts();
-            app.Contact.SelectContact();
-            app.Contact.DeleteContact();
-
         }
 
 
