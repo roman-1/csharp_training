@@ -44,7 +44,7 @@ namespace WebAddressbookTests
 
         public ContactHelper EditContact()
         {
-            driver.FindElement(By.Name("selected[]")).Click();
+            driver.FindElement(By.XPath("//input[@title='Edit']")) .Click();
             return this;
         }
 
