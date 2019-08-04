@@ -42,11 +42,24 @@ namespace WebAddressbookTests
 
 
 
+        public ContactHelper EditContact()
+        {
+            driver.FindElement(By.Name("selected[]")).Click();
+            return this;
+        }
+
+
+
+
         public ContactHelper EditContact(int contact_num)
         {
             driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + contact_num + "]")).Click();
             return this;
         }
+
+
+
+
 
         public ContactHelper UpdateContact()
         {

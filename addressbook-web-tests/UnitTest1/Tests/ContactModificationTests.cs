@@ -17,7 +17,7 @@ namespace WebAddressbookTests
         {
             app.Navigator.GoToHomePage();
             app.Contact.NewContactIfEmpty()
-                .EditContact(1)
+                .EditContact()
                 .FillContactData(new ContactData("Дмитрий", "Сергеев"))
                 .UpdateContact();  
 
