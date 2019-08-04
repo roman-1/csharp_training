@@ -19,7 +19,7 @@ namespace WebAddressbookTests
             app.Navigator.GoToHomePage();
             app.Contact.NewContactIfEmpty()
             .SelectContact(1)
-            .DeleteContact();
+            .DeleteContact();  
 
         }
 

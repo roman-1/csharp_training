@@ -111,7 +111,7 @@ namespace WebAddressbookTests
                 group.Footer = "BBBBBB";
                 group.Header = "CCCCCC";
                 CreateGroup(group);
-                manager.Navigator.GotoGroupsPage(); 
+                manager.Navigator.GotoGroupsPage();   
             }
                 return this;
             }

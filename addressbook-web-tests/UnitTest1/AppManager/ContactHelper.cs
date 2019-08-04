@@ -74,7 +74,7 @@ namespace WebAddressbookTests
                 manager.Navigator.NewContact();
                 manager.Contact.FillContactData(new ContactData("Сергей", "Теплов"))
                     .Submit();
-                manager.Navigator.GoToHomePage(); 
+                manager.Navigator.GoToHomePage();   
             }
             return this;
         }
