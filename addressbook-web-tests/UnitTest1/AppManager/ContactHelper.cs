@@ -44,7 +44,7 @@ namespace WebAddressbookTests
 
         public ContactHelper EditContact()
         {
-            driver.FindElement(By.XPath("//img[@title='Edit']")) .Click();
+            driver.FindElement(By.XPath("//img[@title='Edit']")).Click(); // метод без переменной
             return this;
         }
 
