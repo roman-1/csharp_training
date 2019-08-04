@@ -64,5 +64,24 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper NewContactIfEmpty()
+        {
+            if (IsElementPresent(By.Name("selected[]")))
+            {
+                return this;
+            }
+            {
+                manager.Navigator.NewContact();
+                manager.Contact.FillContactData(new ContactData("Сергей", "Теплов"))
+                    .Submit();
+                manager.Navigator.GoToHomePage(); 
+            }
+            return this;
+        }
+
+
+
+
+
     }
 }

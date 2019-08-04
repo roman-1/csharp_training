@@ -46,6 +46,7 @@ namespace WebAddressbookTests
         public GroupHelper Remove(int p)
         {
             manager.Navigator.GotoGroupsPage();
+            NewGroupIfEmpty();
             SelectGroup(p);
             DeleteGroup();
             manager.Navigator.GotoGroupsPage();
@@ -102,14 +103,16 @@ namespace WebAddressbookTests
 
         public GroupHelper NewGroupIfEmpty()
             {
-                if (IsElementPresent(By.XPath("//input[@title='Select (fds )']"))                 )
+                if (IsElementPresent(By.Name("selected[]")))
                 {
                         return this;
                 }
-                GroupData group = new GroupData("abc");
-                //group.Footer = "fff";
-                //group.Header = "ddd";
+            { GroupData group = new GroupData("AAAAAAA");
+                group.Footer = "BBBBBB";
+                group.Header = "CCCCCC";
                 CreateGroup(group);
+                manager.Navigator.GotoGroupsPage(); 
+            }
                 return this;
             }
 

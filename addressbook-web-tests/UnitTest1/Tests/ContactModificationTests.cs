@@ -15,8 +15,9 @@ namespace WebAddressbookTests
         [Test]
         public void ContactModificationTest()
         {
-            app.Navigator.GotoContacts();
-            app.Contact.EditContact(5)
+            app.Navigator.GoToHomePage();
+            app.Contact.NewContactIfEmpty()
+                .EditContact(1)
                 .FillContactData(new ContactData("Дмитрий", "Сергеев"))
                 .UpdateContact();
 

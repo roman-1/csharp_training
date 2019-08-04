@@ -20,7 +20,7 @@ namespace WebAddressbookTests
         protected NavigationHelper navigator; //эти поля protected, поэтому Тесты не могут к ним обратиться =>> prorerty с getter
         protected GroupHelper groupHelper;
         protected ContactHelper contactHelper;
-        private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
+        protected static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
         private ApplicationManager() 
         {

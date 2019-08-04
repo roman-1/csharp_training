@@ -11,14 +11,15 @@ namespace WebAddressbookTests
 {
     [TestFixture]
     public class ContactRemovalTests : AuthTestBase
-    { 
+    {  
 
         [Test]
         public void ContactRemovalTest()
         {
-            app.Navigator.GotoContacts();
-            app.Contact.SelectContact(1);
-            app.Contact.DeleteContact();
+            app.Navigator.GoToHomePage();
+            app.Contact.NewContactIfEmpty()
+            .SelectContact(1)
+            .DeleteContact();
 
         }
 
