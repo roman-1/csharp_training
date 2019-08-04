@@ -28,28 +28,27 @@ namespace WebAddressbookTests
 
         public ContactHelper FillContactData(ContactData contact)
         {
-            driver.FindElement(By.Name("firstname")).SendKeys(contact.Name);
-            driver.FindElement(By.Name("lastname")).SendKeys(contact.Surename);
+            Type(By.Name("firstname"), contact.Name);
+            Type(By.Name("lastname"), contact.Surename);
             return this;
         }
 
 
-        public ContactHelper SelectContact(int index)
+        public ContactHelper SelectContact(int ind)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + ind + "]")).Click();
             return this;
         }
 
 
 
-        public ContactHelper EditContact()
+        public ContactHelper EditContact(int contact_num)
         {
-            driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
-
+            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + contact_num + "]")).Click();
             return this;
         }
 
-        public ContactHelper SubmitContact()
+        public ContactHelper UpdateContact()
         {
             driver.FindElement(By.XPath("(//input[@name='update'])[2]")).Click();
 

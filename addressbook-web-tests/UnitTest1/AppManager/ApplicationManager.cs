@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome; 
@@ -20,12 +20,9 @@ namespace WebAddressbookTests
         protected NavigationHelper navigator; //эти поля protected, поэтому Тесты не могут к ним обратиться =>> prorerty с getter
         protected GroupHelper groupHelper;
         protected ContactHelper contactHelper;
+        private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
-        [SetUp]
-        public void SetupTest()
-        {    }
-
-        public ApplicationManager() 
+        private ApplicationManager() 
         {
             driver = new ChromeDriver(@"C:\Drivers\chromedriver_win32-75\");
             baseURL = "http://localhost/addressbook";
@@ -33,8 +30,32 @@ namespace WebAddressbookTests
             navigator = new NavigationHelper(this, baseURL);
             groupHelper = new GroupHelper(this);
             contactHelper = new ContactHelper(this);
-
         }
+
+        ~ApplicationManager()
+        {
+            try
+            {
+                driver.Quit();
+            }
+            catch (Exception)
+            {
+                // Ignore errors if unable to close the browser
+            }
+        }
+
+
+        public static ApplicationManager GetInstance()
+        {
+            if (! app.IsValueCreated)
+            {
+                ApplicationManager newInstance = new ApplicationManager();
+                newInstance.Navigator.GoToHomePage();
+                app.Value = newInstance;
+            }
+            return app.Value;
+        }
+
 
         public IWebDriver Driver
         {
@@ -43,21 +64,6 @@ namespace WebAddressbookTests
                 return driver;
             }
         }
-
-
-        public void Stop()
-        {
-                try
-                {
-                    driver.Quit();
-                }
-                catch (Exception)
-                {
-                    // Ignore errors if unable to close the browser
-                }
-
-        }
-
 
 
         public LoginHelper Auth

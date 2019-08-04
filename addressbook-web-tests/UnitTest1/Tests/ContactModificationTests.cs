@@ -10,16 +10,15 @@ namespace WebAddressbookTests
 
 {
     [TestFixture]
-    public class ContactModificationTests : TestBase
+    public class ContactModificationTests : AuthTestBase
     {
         [Test]
         public void ContactModificationTest()
         {
             app.Navigator.GotoContacts();
-            app.Contact.SelectContact(1)
-                .EditContact()
-                .FillContactData(new ContactData("Новик", "Новиков"))
-                .SubmitContact();
+            app.Contact.EditContact(5)
+                .FillContactData(new ContactData("Дмитрий", "Сергеев"))
+                .UpdateContact();
 
 
 
