@@ -20,7 +20,7 @@ namespace WebAddressbookTests
             newData.Header = null;
             newData.Footer = null;
 
-            app.Groups.NewGroupIfEmpty();
+            app.Groups.NewGroupIfEmpty();  
 
             List<GroupData> oldGroups = app.Groups.GetGroupList();
 
