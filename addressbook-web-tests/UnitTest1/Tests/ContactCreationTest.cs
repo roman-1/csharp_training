@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 
 namespace WebAddressbookTests
@@ -15,18 +16,39 @@ namespace WebAddressbookTests
         [Test]
         public void ContactCreationTest() 
         {
-            app.Navigator.NewContact();
-            app.Contact.FillContactData(new ContactData("Иван", "Иванов"))
-                .Submit(); 
+            ContactData contact = new ContactData("Алан", "Дзагоев");
+            List <ContactData> oldContacts = app.Contact.GetContactList();
+
+            app.Contact.CreateContact(contact);
+            List<ContactData> newContacts = app.Contact.GetContactList();
+            oldContacts.Add(contact);
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
+
         }
 
         [Test]
         public void EpmtyContactCreationTest()
         {
-            app.Navigator.NewContact();
-            app.Contact.FillContactData(new ContactData("", ""))
-                .Submit();
+
+            ContactData contact = new ContactData("", "");
+
+            List<ContactData> oldContacts = app.Contact.GetContactList();
+
+            app.Contact.CreateContact(contact);
+            List<ContactData> newContacts = app.Contact.GetContactList();
+            oldContacts.Add(contact);
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
+
+
+
+
         }
+
+
 
 
 

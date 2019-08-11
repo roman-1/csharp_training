@@ -173,6 +173,11 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Console, Version=4.0.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Console.4.3.1\lib\net46\System.Console.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -229,6 +234,7 @@
     <Compile Include="Tests\ContactCreationTest.cs" />
     <Compile Include="Tests\LoginTests.cs" />
     <Compile Include="Tests\TestBase.cs" />
+    <Compile Include="Example-List.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
