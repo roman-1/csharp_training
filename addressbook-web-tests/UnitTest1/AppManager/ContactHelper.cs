@@ -21,29 +21,38 @@ namespace WebAddressbookTests
 
         public List<ContactData> GetContactList()
         {
-            List<ContactData> contacts = new List<ContactData>();
-            manager.Navigator.GoToHomePage();
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name='entry']")); //список по css
-
-            foreach (IWebElement element in elements)
+            if (contactCache == null)
             {
-                IWebElement firstnames = element.FindElement(By.CssSelector("td:nth-child(3)")); // 1
-                IWebElement lastnames = element.FindElement(By.CssSelector("td:nth-child(2)")); // 2
+                contactCache = new List<ContactData>();
+                manager.Navigator.GoToHomePage();
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name='entry']"));
 
-                contacts.Add(new ContactData(firstnames.Text, lastnames.Text));
+                foreach (IWebElement element in elements)
+                {
+                    IWebElement firstnames = element.FindElement(By.CssSelector("td:nth-child(3)")); // 1
+                    IWebElement lastnames = element.FindElement(By.CssSelector("td:nth-child(2)")); // 2
+                    contactCache.Add(new ContactData(firstnames.Text, lastnames.Text)
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    }
+                    );
+                }
             }
-            return contacts;
+            return new List<ContactData>(contactCache);
         }
 
 
+        private List<ContactData> contactCache = null;
 
+        public int GetContactCount()
+        {
+            return driver.FindElements(By.CssSelector("tr[name='entry']")).Count;
+        }
 
-
-
-
-        public ContactHelper Submit()
+        public ContactHelper SubmitContactCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -78,7 +87,7 @@ namespace WebAddressbookTests
             manager.Navigator.GoToHomePage();
             manager.Navigator.NewContact();
             FillContactData(newData);
-            Submit();
+            SubmitContactCreation();
             manager.Navigator.GoToHomePage();
             return this;
         }
@@ -88,7 +97,7 @@ namespace WebAddressbookTests
         public ContactHelper UpdateContact()
         {
             driver.FindElement(By.XPath("(//input[@name='update'])[2]")).Click();
-
+            contactCache = null;
             return this;
         }
 
@@ -98,6 +107,7 @@ namespace WebAddressbookTests
             SelectContact(index);
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             driver.SwitchTo().Alert().Accept();
+            contactCache = null;
             manager.Navigator.GoToHomePage();
             return this;
 
@@ -113,10 +123,13 @@ namespace WebAddressbookTests
                 manager.Navigator.GoToHomePage();
                 manager.Navigator.NewContact();
                 FillContactData(new ContactData("Сергей", "Теплов"))
-                    .Submit();
+                    .SubmitContactCreation();
+                contactCache = null;
                 manager.Navigator.GoToHomePage();   
             }
+
             return this;
+
         }
 
         public ContactHelper Modify(int index, ContactData newData)
