@@ -6,47 +6,56 @@ using System.Threading.Tasks;
 
 namespace WebAddressbookTests
 {
-    public class ContactData
+    public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
-        private string name;
-        private string surename;
-
-        public ContactData(string name, string surename) 
+       
+        public ContactData(string firstname, string lastname)  
         {
-            this.name = name;
-            this.surename = surename;
+            Firstname = firstname;
+            Lastname = lastname;
         }
 
-        public string Name
+        public bool Equals(ContactData other) // сравнение списков
         {
-            get
+            if (Object.ReferenceEquals(other, null))
             {
-                return name;
+                return false;
             }
-
-            set
+            if (Object.ReferenceEquals(this, other))
             {
-                name = value;
+                return true;
             }
-        }
-
-        public string Surename
-        {
-            get
-            {
-                return surename;
-            }
-
-            set
-            {
-                surename = value;
-            }
-
-
+            return Firstname == other.Firstname && Lastname == other.Lastname; // сравнение по имени
         }
 
 
+        public override int GetHashCode()
+        {
+            return Firstname.GetHashCode() ^ Lastname.GetHashCode(); //объединение
+        }
 
+        public override string ToString()
+        {
+            return "Firstname = " + Firstname + ", Lastname = " + Lastname;
+        }
+
+        public int CompareTo(ContactData other)
+        {
+            string othernames = other.Firstname + other.Lastname;
+            string names = Firstname + Lastname;
+            if (Object.ReferenceEquals(other, null))
+            {
+                return 1;
+            }
+            return names.CompareTo(othernames);
+        }
+
+
+        public string Firstname { get; set; }
+       
+        public string Lastname { get; set; }
+
+        public string Id { get; set; }
 
     }
 }
