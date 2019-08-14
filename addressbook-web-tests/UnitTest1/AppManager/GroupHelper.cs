@@ -89,6 +89,7 @@ namespace WebAddressbookTests
             NewGroupCreation();
             FillGroupForm(group);
             SubmitGroupCreation();
+            manager.Navigator.GotoGroupsPage();
 
             return this;
         }
