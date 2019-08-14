@@ -34,10 +34,10 @@ namespace WebAddressbookTests
 
 
 
-        public GroupHelper Remove(int p)
+        public GroupHelper Remove(int index)
         {
             manager.Navigator.GotoGroupsPage();
-            SelectGroup(1);
+            SelectGroup(index);
             DeleteGroup();
             manager.Navigator.GotoGroupsPage();
             manager.Auth.Logout();

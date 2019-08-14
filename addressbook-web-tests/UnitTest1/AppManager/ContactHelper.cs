@@ -34,9 +34,10 @@ namespace WebAddressbookTests
         }
 
 
-        public void SelectContact()
+        public void SelectContact(int index)
         {
-            driver.FindElement(By.Name("selected[]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            //driver.FindElement(By.Name("selected[]")).Click();
         }
 
 

@@ -40,7 +40,7 @@ namespace WebAddressbookTests
         public void ContactRemovalTest()
         {
             app.Navigator.GotoContacts();
-            app.Contact.SelectContact();
+            app.Contact.SelectContact(4);
             app.Contact.DeleteContact();
 
         }

@@ -13,7 +13,7 @@ namespace WebAddressbookTests
 
 
         [Test]
-        public void GroupModification()
+        public void GroupModificationTest()
         {
             app.Groups.GroupModification();
              
