@@ -7,6 +7,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using System.Text.RegularExpressions;
 
 
 namespace WebAddressbookTests
@@ -41,6 +42,60 @@ namespace WebAddressbookTests
             return new List<ContactData>(contactCache);
         }
 
+        public ContactData GetContactInformaionFromTable(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"));
+            string lastName = cells[1].Text;
+            string firstName = cells[2].Text;
+            string address = cells[3].Text;
+            string allEmails = cells[4].Text;
+            string allPhones = cells[5].Text;
+
+            return new ContactData(firstName, lastName)
+            {
+                Address = address,
+                AllPhones = allPhones,
+                AllEmails = allEmails
+            };
+        }
+
+        public ContactData GetContactInformaionFromEditForm(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            InitContactModification(index);
+            string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+
+            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
+            string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
+            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+
+            string email1 = driver.FindElement(By.Name("email")).GetAttribute("value");
+            string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
+            string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
+
+            return new ContactData(firstName, lastName)
+            {
+                Address = address,
+                HomePhone = homePhone,
+                MobilePhone = mobilePhone,
+                WorkPhone = workPhone,
+                Email1 = email1,
+                Email2 = email2,
+                Email3 = email3
+            };
+        }
+
+        public int GetNumberOfSearchResults()
+        {
+            manager.Navigator.GoToHomePage();
+            string text = driver.FindElement(By.TagName("label")).Text;
+            Match m = new Regex(@"\d+").Match(text);
+            return Int32.Parse(m.Value);
+        }
 
         private List<ContactData> contactCache = null;
 
@@ -61,6 +116,14 @@ namespace WebAddressbookTests
         {
             Type(By.Name("firstname"), contact.Firstname);
             Type(By.Name("lastname"), contact.Lastname);
+            Type(By.Name("address"), contact.Address);
+            Type(By.Name("home"), contact.HomePhone);
+            Type(By.Name("mobile"), contact.MobilePhone);
+            Type(By.Name("work"), contact.WorkPhone);
+            Type(By.Name("email"), contact.Email1);
+            Type(By.Name("email2"), contact.Email2);
+            Type(By.Name("email3"), contact.Email3);
+            
             return this;
         }
 
@@ -88,7 +151,29 @@ namespace WebAddressbookTests
             manager.Navigator.NewContact();
             FillContactData(newData);
             SubmitContactCreation();
+            contactCache = null;
             manager.Navigator.GoToHomePage();
+            return this;
+        }
+
+
+        public ContactHelper NewContactIfEmpty()
+        {
+            if (IsElementPresent(By.Name("selected[]")))   // проверка наличия контакта
+            {
+                return this;
+            }
+            {
+                ContactData defaultContactData = new ContactData("Сергей", "Теплов");
+                defaultContactData.Address = "Neverland";
+                defaultContactData.HomePhone = "+7 (111) 111 22 33";
+                defaultContactData.MobilePhone = "+7 (222) 333 22 11";
+                defaultContactData.WorkPhone = "+7 (333) 333 22 11";
+                defaultContactData.Email1 = "asdfasdf@mylo.ru";
+                defaultContactData.Email2 = "asdfasdf@qweqwe.ru";
+                defaultContactData.Email3 = "asdfasdf@post.com";
+                CreateContact(defaultContactData);
+            }
             return this;
         }
 
@@ -113,24 +198,6 @@ namespace WebAddressbookTests
 
         }
 
-        public ContactHelper NewContactIfEmpty()
-        {
-            if (IsElementPresent(By.Name("selected[]")))
-            {
-                return this;
-            }
-            {
-                manager.Navigator.GoToHomePage();
-                manager.Navigator.NewContact();
-                FillContactData(new ContactData("Сергей", "Теплов"))
-                    .SubmitContactCreation();
-                contactCache = null;
-                manager.Navigator.GoToHomePage();   
-            }
-
-            return this;
-
-        }
 
         public ContactHelper Modify(int index, ContactData newData)
         {
