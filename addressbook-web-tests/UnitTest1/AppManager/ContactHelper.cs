@@ -89,12 +89,31 @@ namespace WebAddressbookTests
             };
         }
 
+        public ContactData GetContactInformationFromDetails(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            OpenContactDetails(0);
+            string allInfo = driver.FindElement(By.CssSelector("div#content")).Text;
+            return new ContactData(allInfo)
+            {
+                AllInfo = allInfo
+            };
+        }
+
+
+
         public int GetNumberOfSearchResults()
         {
             manager.Navigator.GoToHomePage();
             string text = driver.FindElement(By.TagName("label")).Text;
             Match m = new Regex(@"\d+").Match(text);
             return Int32.Parse(m.Value);
+        }
+
+        public ContactHelper OpenContactDetails(int index)
+        {
+            driver.FindElement(By.XPath("(//img[@title='Details'])[" + (index + 1) + "]")).Click();
+            return this;
         }
 
         private List<ContactData> contactCache = null;

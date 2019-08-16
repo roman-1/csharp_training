@@ -11,12 +11,19 @@ namespace WebAddressbookTests
     {
         private string allPhones;
         private string allEmails;
+        private string allInfo;
 
         public ContactData(string firstname, string lastname)  
         {
             Firstname = firstname;
             Lastname = lastname;
         }
+
+        public ContactData(string allInfo)
+        {
+            AllInfo = allInfo;
+        }
+
 
         public bool Equals(ContactData other) // сравнение списков
         {
@@ -113,6 +120,26 @@ namespace WebAddressbookTests
                 allEmails = value;
             }
         }
+
+        public string AllInfo
+        {
+            get
+            {
+                if (allInfo != null)
+                {
+                    return allInfo;
+                }
+                else
+                {
+                    return (Firstname + " " + Lastname + "\r\n" + Address + "\r\n" + AllPhones + "\r\n" + AllEmails).Trim();
+                }
+            }
+            set
+            {
+                allInfo = value;
+            }
+        }
+        
 
         private string CleanUp(string phone)
         {
