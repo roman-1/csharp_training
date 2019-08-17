@@ -26,16 +26,16 @@ namespace WebAddressbookTests
             newData.Email3 = "whatnobodywannasay.net";
 
             app.Navigator.GoToHomePage();
-            app.Contact.NewContactIfEmpty();
+            app.Contacts.CreateIfContactNotCreated(0);
 
-            List<ContactData> oldContacts = app.Contact.GetContactList(); //создаем список старых данных и изменяем контакт
+            List<ContactData> oldContacts = app.Contacts.GetContactList(); //создаем список старых данных и изменяем контакт
             ContactData oldData = oldContacts[0];
 
-            app.Contact.Modify(0, newData);
+            app.Contacts.Modify(0, newData);
 
-            Assert.AreEqual(oldContacts.Count, app.Contact.GetContactCount()); //проверка изменения старого контакта
+            Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactCount()); //проверка изменения старого контакта
 
-            List<ContactData> newContacts = app.Contact.GetContactList();
+            List<ContactData> newContacts = app.Contacts.GetContactList();
             oldContacts[0].Firstname = newData.Firstname;
             oldContacts[0].Lastname = newData.Lastname;
             oldContacts.Sort();

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
-
 namespace WebAddressbookTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
@@ -13,19 +12,19 @@ namespace WebAddressbookTests
         private string allEmails;
         private string allInfo;
 
-        public ContactData(string firstname, string lastname)  
-        {
-            Firstname = firstname;
-            Lastname = lastname;
-        }
-
         public ContactData(string allInfo)
         {
             AllInfo = allInfo;
         }
 
+        public ContactData(string firstname, string lastname)
+        {
+            Firstname = firstname;
+            Lastname = lastname;
+        }
+        
 
-        public bool Equals(ContactData other) // сравнение списков
+        public bool Equals(ContactData other)//сравнение объектов и списков
         {
             if (Object.ReferenceEquals(other, null))
             {
@@ -35,54 +34,40 @@ namespace WebAddressbookTests
             {
                 return true;
             }
-            return Firstname == other.Firstname && Lastname == other.Lastname; // сравнение по имени
+            return Firstname == other.Firstname && Lastname == other.Lastname;//по имени и фамилии
         }
-
-
-        public override int GetHashCode()
+       
+        public override int GetHashCode() //оптимизация сравнения
         {
-            return Firstname.GetHashCode() ^ Lastname.GetHashCode(); //объединение
+            return Firstname.GetHashCode() ^ Lastname.GetHashCode();
         }
 
         public override string ToString()
         {
             return "Firstname = " + Firstname + ", Lastname = " + Lastname;
         }
-
+        
         public int CompareTo(ContactData other)
         {
+            string othernames = other.Firstname + other.Lastname;
+            string names = Firstname + Lastname;
             if (Object.ReferenceEquals(other, null))
             {
                 return 1;
             }
-            if (Lastname.CompareTo(other.Lastname) != 0)
-            {
-                return Lastname.CompareTo(other.Lastname);
-            }
-            return Firstname.CompareTo(other.Firstname);
+            return names.CompareTo(othernames);
         }
 
-
         public string Firstname { get; set; }
-       
         public string Lastname { get; set; }
-
         public string Id { get; set; }
-
         public string Address { get; set; }
-
         public string HomePhone { get; set; }
-
         public string MobilePhone { get; set; }
-
         public string WorkPhone { get; set; }
-
         public string Email1 { get; set; }
-
         public string Email2 { get; set; }
-
         public string Email3 { get; set; }
-
         public string AllPhones
         {
             get
@@ -101,7 +86,6 @@ namespace WebAddressbookTests
                 allPhones = value;
             }
         }
-
         public string AllEmails
         {
             get
@@ -121,6 +105,7 @@ namespace WebAddressbookTests
             }
         }
 
+
         public string AllInfo
         {
             get
@@ -131,7 +116,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (Firstname + " " + Lastname + "\r\n" + Address + "\r\n" + AllPhones + "\r\n" + AllEmails).Trim();
+                    return (Firstname + " " + Lastname + "\r\n" + Address + "\r\n\r\n" + ModifiedPhones(HomePhone, MobilePhone, WorkPhone) + Email1 + Email2 + Email3).Trim();
                 }
             }
             set
@@ -139,7 +124,6 @@ namespace WebAddressbookTests
                 allInfo = value;
             }
         }
-        
 
         private string CleanUp(string phone)
         {
@@ -149,8 +133,17 @@ namespace WebAddressbookTests
             }
             else
             {
-                return Regex.Replace(phone, "[-( )]", "") + "\r\n"; // без лишних символов
+                return Regex.Replace(phone, "[-( )]", "") + "\r\n";
             }
         }
+
+        public string ModifiedPhones(string modHomePhone, string modMobilePhone, string modWorkPhone)
+        {
+            return null;
+        }
     }
+
+
+
+
 }

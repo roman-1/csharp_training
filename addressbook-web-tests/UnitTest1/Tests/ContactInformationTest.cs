@@ -13,10 +13,10 @@ namespace WebAddressbookTests
         [Test]
         public void TestContactHomePageInformation()
         {
-            app.Contact.NewContactIfEmpty();
+            app.Contacts.CreateIfContactNotCreated(0);
 
-            ContactData fromTable = app.Contact.GetContactInformaionFromTable(0);
-            ContactData fromForm = app.Contact.GetContactInformaionFromEditForm(0);
+            ContactData fromTable = app.Contacts.GetContactInformaionFromTable(0);
+            ContactData fromForm = app.Contacts.GetContactInformaionFromEditForm(0);
 
             Assert.AreEqual(fromTable, fromForm);
             Assert.AreEqual(fromTable.Address, fromForm.Address);
@@ -27,12 +27,16 @@ namespace WebAddressbookTests
         [Test]
         public void TestContactDetailsInformation()
         {
-            app.Contact.NewContactIfEmpty();
+            app.Contacts.CreateIfContactNotCreated(0);
 
-            ContactData fromDetails = app.Contact.GetContactInformationFromDetails(0);
-            ContactData fromForm = app.Contact.GetContactInformaionFromEditForm(0);
+            ContactData fromDetails = app.Contacts.GetContactInformationFromDetails(0);
+            ContactData fromForm = app.Contacts.GetContactInformaionFromEditForm(0);
 
             Assert.AreEqual(fromDetails.AllInfo, fromForm.AllInfo);
         }
+
     }
+
+
+
 }

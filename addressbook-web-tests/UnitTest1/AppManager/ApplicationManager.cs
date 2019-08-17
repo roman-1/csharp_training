@@ -16,8 +16,8 @@ namespace WebAddressbookTests
         protected IWebDriver driver;
         protected string baseURL;
 
-        protected LoginHelper loginHelper;    //ссылки на помощников
-        protected NavigationHelper navigator; //эти поля protected, поэтому Тесты не могут к ним обратиться =>> prorerty с getter
+        protected LoginHelper loginHelper; 
+        protected NavigationHelper navigator;
         protected GroupHelper groupHelper;
         protected ContactHelper contactHelper;
         protected static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
@@ -90,7 +90,7 @@ namespace WebAddressbookTests
             }
         }
 
-        public ContactHelper Contact
+        public ContactHelper Contacts
         {
             get
             {
