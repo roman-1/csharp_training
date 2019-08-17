@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Text.RegularExpressions;  
+using System.Text.RegularExpressions;
 namespace WebAddressbookTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
@@ -22,7 +22,7 @@ namespace WebAddressbookTests
             Firstname = firstname;
             Lastname = lastname;
         }
-        
+
 
         public bool Equals(ContactData other)//сравнение объектов и списков
         {
@@ -34,10 +34,10 @@ namespace WebAddressbookTests
             {
                 return true;
             }
-            return Firstname == other.Firstname && Lastname == other.Lastname;//по имени и фамилии
+            return Firstname == other.Firstname && Lastname == other.Lastname;
         }
-       
-        public override int GetHashCode() //оптимизация сравнения
+
+        public override int GetHashCode() //оптимизация
         {
             return Firstname.GetHashCode() ^ Lastname.GetHashCode();
         }
@@ -46,7 +46,7 @@ namespace WebAddressbookTests
         {
             return "Firstname = " + Firstname + ", Lastname = " + Lastname;
         }
-        
+
         public int CompareTo(ContactData other)
         {
             string othernames = other.Firstname + other.Lastname;
@@ -78,14 +78,16 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone)).Trim();
+                    return (PhoneCleanUp(HomePhone) + PhoneCleanUp(MobilePhone) + PhoneCleanUp(WorkPhone)).Trim();
                 }
             }
             set
             {
                 allPhones = value;
             }
+
         }
+
         public string AllEmails
         {
             get
@@ -96,7 +98,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (Email1 + "\r\n" + Email2 + "\r\n" + Email3).Trim();
+                    return (EmailModification(Email1) + EmailModification(Email2) + EmailModification(Email3)).Trim();
                 }
             }
             set
@@ -104,7 +106,6 @@ namespace WebAddressbookTests
                 allEmails = value;
             }
         }
-
 
         public string AllInfo
         {
@@ -116,7 +117,9 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (Firstname + " " + Lastname + "\r\n" + Address + "\r\n\r\n" + ModifiedPhones(HomePhone, MobilePhone, WorkPhone) + Email1 + Email2 + Email3).Trim();
+                    return (Firstname + " " + Lastname + "\r\n" + Address + "\r\n"
+                        + PhoneModification(HomePhone, "H") + PhoneModification(MobilePhone, "M") + PhoneModification(WorkPhone, "W") + "\r\n"
+                        + EmailModification(Email1) + EmailModification(Email2) + EmailModification(Email3)).Trim();
                 }
             }
             set
@@ -125,7 +128,7 @@ namespace WebAddressbookTests
             }
         }
 
-        private string CleanUp(string phone)
+        public string PhoneCleanUp(string phone)//  убираем лишние символы
         {
             if (phone == null || phone == "")
             {
@@ -137,13 +140,34 @@ namespace WebAddressbookTests
             }
         }
 
-        public string ModifiedPhones(string modHomePhone, string modMobilePhone, string modWorkPhone)
+
+        public string PhoneModification(string phone, string type)
         {
-            return null;
+            if (phone == null || phone == "")
+            {
+                return "";
+            }
+            else
+            {
+                phone = $"\r\n{type}: {phone}";
+                return phone;
+            }
+
         }
+
+
+        public string EmailModification(string email)
+        {
+            if (email == null || email == "")
+            {
+                return "";
+            }
+            else
+            {
+                email = $"\r\n{email}";
+                return email;
+            }
+        }
+
     }
-
-
-
-
 }
